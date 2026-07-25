@@ -68,3 +68,8 @@ test:
 .PHONY: db
 db:
 	${EXEC} ${DB_CONTAINER} psql -U ${DB_USER} -d ${DB_NAME}
+
+# Логи базы данных
+.PHONY: dblogs
+dblogs:
+	${LOGS} ${DB_CONTAINER} -f
