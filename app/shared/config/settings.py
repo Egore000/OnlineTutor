@@ -1,3 +1,6 @@
+from functools import lru_cache
+
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -5,6 +8,7 @@ class AppSettings(BaseSettings):
     """Настройки приложения"""
     name: str
     version: str
+    debug: bool = False
 
     model_config = SettingsConfigDict(env_prefix="APP_", case_sensitive=False)
 
@@ -30,7 +34,6 @@ class ServerSettings(BaseSettings):
     """Настройки сервера"""
     host: str = "127.0.0.1"
     port: int = 8000
-    debug: bool = False
 
     model_config = SettingsConfigDict(env_prefix="SERVER_", case_sensitive=False)
 
@@ -47,11 +50,17 @@ class JWTSettings(BaseSettings):
 
 class Settings(BaseSettings):
     """Настройки приложения"""
-    app: AppSettings = AppSettings()
-    db: DatabaseSettings = DatabaseSettings()
-    server: ServerSettings = ServerSettings()
+    app: AppSettings = Field(default_factory=AppSettings)
+    db: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    server: ServerSettings = Field(default_factory=ServerSettings)
+    jwt: JWTSettings = Field(default_factory=JWTSettings)
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
 
-settings = Settings()
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
+
+
+settings = get_settings()
