@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv async --all-extras --dev
+
+      - name: Ruff
+        run: uv ruff check .
+
+      - name: Ruff format
+        run: uv run ruff format --check .
+
+      - name: MyPy
+        run: uv mypy .
+
+      - name: Pytest
+        run: uv run pytest
+       
