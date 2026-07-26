@@ -16,7 +16,7 @@ class AppSettings(BaseSettings):
 
 class DatabaseSettings(BaseSettings):
     """Настройки базы данных"""
-    
+
     engine: str
     driver: str
     host: str
@@ -34,7 +34,7 @@ class DatabaseSettings(BaseSettings):
 
 class ServerSettings(BaseSettings):
     """Настройки сервера"""
-    
+
     host: str = "127.0.0.1"
     port: int = 8000
 
@@ -43,7 +43,7 @@ class ServerSettings(BaseSettings):
 
 class JWTSettings(BaseSettings):
     """Настройки JWT-токена"""
-    
+
     secret_key: str
     algorithm: str
     access_token_expire_minutes: int
@@ -54,7 +54,7 @@ class JWTSettings(BaseSettings):
 
 class Settings(BaseSettings):
     """Настройки приложения"""
-    
+
     app: AppSettings = Field(default_factory=AppSettings)
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
