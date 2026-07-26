@@ -1,8 +1,7 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 
 from app.shared.config import settings
-
 
 app = FastAPI(
     title=settings.app.name,
