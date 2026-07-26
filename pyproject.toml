@@ -30,6 +30,14 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    "docs",
+]
 
 [tool.ruff.lint]
 select = [
