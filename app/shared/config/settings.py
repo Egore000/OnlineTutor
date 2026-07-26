@@ -15,8 +15,8 @@ class AppSettings(BaseSettings):
 
 class DatabaseSettings(BaseSettings):
     """Настройки базы данных"""
-    _engine: str
-    _driver: str
+    engine: str
+    driver: str
     host: str
     port: int
     name: str
@@ -25,7 +25,7 @@ class DatabaseSettings(BaseSettings):
 
     @property
     def url(self) -> str:
-        return f"{self._engine}+{self._driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+        return f"{self.engine}+{self.driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
     model_config = SettingsConfigDict(env_prefix="DB_", case_sensitive=False)
 
