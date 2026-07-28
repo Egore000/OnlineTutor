@@ -55,4 +55,3 @@ OnlineTutor — это система управления обучением (L
 Если у вас есть вопросы или предложения, свяжитесь со мной по электронной почте: [egor.pakhomov.2002@gmail.com](mailto:egor.pakhomov.2002@gmail.com).
 
 Вы также можете найти меня на GitHub: [Egore000](https://github.com/Egore000).
-
