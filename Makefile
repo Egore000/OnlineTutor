@@ -3,7 +3,7 @@ include .env
 DC = docker-compose
 EXEC = docker exec -it
 LOGS = docker logs
-ENV = --env-file .env
+ENV = --env-file .env.docker
 APP_FILE = docker-compose.yaml
 APP_CONTAINER = ${PROJECTNAME}_app
 DB_CONTAINER = ${PROJECTNAME}_db
