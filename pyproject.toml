@@ -57,3 +57,6 @@ fixable = ["ALL"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*.py"]
+python_functions = ["test_*"]
