@@ -59,6 +59,11 @@ migration:
 migrate:
 	${RUN_COMMAND} "alembic upgrade head"
 
+# Отмена последней миграции БД
+.PHONY: downgrade
+downgrade:
+	${RUN_COMMAND} "alembic downgrade -1"
+
 # Запуск тестов
 .PHONY: test
 test:
