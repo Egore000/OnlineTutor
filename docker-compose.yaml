@@ -8,7 +8,7 @@ x-building: &building
 # Общие параметры для нескольких сервисов
 x-shared-parameters: &shared-parameters
   env_file:
-    - .env
+    - .env.docker
   restart: always
 
 services:
@@ -16,8 +16,6 @@ services:
     image: ${PROJECTNAME}-app
     <<: [*building, *shared-parameters]
     container_name: ${PROJECTNAME}_app
-    env_file:
-      - .env
     command: sh -c "uvicorn app.main:app --host=0.0.0.0 --port 8000 --reload"
     ports:
       - "${SERVER_PORT}:8000"

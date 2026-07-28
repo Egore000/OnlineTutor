@@ -1,7 +1,10 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 class AppSettings(BaseSettings):
@@ -11,7 +14,13 @@ class AppSettings(BaseSettings):
     version: str
     debug: bool = False
 
-    model_config = SettingsConfigDict(env_prefix="APP_", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_prefix="APP_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
 
 class DatabaseSettings(BaseSettings):
@@ -29,7 +38,13 @@ class DatabaseSettings(BaseSettings):
     def url(self) -> str:
         return f"{self.engine}+{self.driver}://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
-    model_config = SettingsConfigDict(env_prefix="DB_", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_prefix="DB_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
 
 class ServerSettings(BaseSettings):
@@ -38,7 +53,13 @@ class ServerSettings(BaseSettings):
     host: str = "127.0.0.1"
     port: int = 8000
 
-    model_config = SettingsConfigDict(env_prefix="SERVER_", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_prefix="SERVER_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
 
 class JWTSettings(BaseSettings):
@@ -49,7 +70,13 @@ class JWTSettings(BaseSettings):
     access_token_expire_minutes: int
     refresh_token_expire_days: int
 
-    model_config = SettingsConfigDict(env_prefix="JWT_", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_prefix="JWT_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
 
 class Settings(BaseSettings):
@@ -60,7 +87,11 @@ class Settings(BaseSettings):
     server: ServerSettings = Field(default_factory=ServerSettings)
     jwt: JWTSettings = Field(default_factory=JWTSettings)
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 
 @lru_cache
