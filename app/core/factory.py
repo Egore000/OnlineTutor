@@ -1,14 +1,17 @@
 from fastapi import FastAPI
 
 from app.core.lifespan import lifespan
+from app.core.middleware import configure_middlewares
 from app.shared.config import settings
 
 
 def create_app() -> FastAPI:
-    return FastAPI(
+    app = FastAPI(
         title=settings.app.name,
         description=settings.app.description,
         version=settings.app.version,
         debug=settings.app.debug,
         lifespan=lifespan,
     )
+    configure_middlewares(app)
+    return app
