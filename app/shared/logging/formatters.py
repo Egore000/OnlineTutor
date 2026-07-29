@@ -13,9 +13,9 @@ class CustomJsonFormatter(JsonFormatter):
 
         super().add_fields(log_data, record, message_dict)
 
-        if not log_data.get("timestamp"):
+        if not log_data.get("asctime"):
             now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-            log_data["timestamp"] = now
+            log_data["asctime"] = now
 
         if log_data.get("level"):
             log_data["level"] = log_data["level"].upper()
@@ -23,4 +23,4 @@ class CustomJsonFormatter(JsonFormatter):
             log_data["level"] = record.levelname
 
 
-formatter = JsonFormatter("%(level)s %(timestamp)s %(name)s %(message)s")
+formatter = JsonFormatter("%(levelname)s %(asctime)s %(name)s %(message)s", json_ensure_ascii=False)
