@@ -1,15 +1,9 @@
 import uvicorn
-from fastapi import FastAPI
 
+from app.core.factory import create_app
 from app.shared.config import settings
 
-app = FastAPI(
-    title=settings.app.name,
-    version=settings.app.version,
-    debug=settings.app.debug,
-    description="API for Tutor Management System",
-)
-
+app = create_app()
 
 if __name__ == "__main__":
     uvicorn.run(

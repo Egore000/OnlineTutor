@@ -11,6 +11,7 @@ class AppSettings(BaseSettings):
     """Настройки приложения"""
 
     name: str
+    description: str
     version: str
     debug: bool = False
 
