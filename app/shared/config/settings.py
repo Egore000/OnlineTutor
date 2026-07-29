@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,6 +15,7 @@ class AppSettings(BaseSettings):
     description: str
     version: str
     debug: bool = False
+    mode: Literal["TEST", "DEV", "PROD"]
 
     model_config = SettingsConfigDict(
         env_prefix="APP_",
@@ -80,6 +82,18 @@ class JWTSettings(BaseSettings):
     )
 
 
+class LoggingSettings(BaseSettings):
+    level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+
+    model_config = SettingsConfigDict(
+        env_prefix="LOG_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
 class Settings(BaseSettings):
     """Настройки приложения"""
 
@@ -87,6 +101,7 @@ class Settings(BaseSettings):
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
     jwt: JWTSettings = Field(default_factory=JWTSettings)
+    log: LoggingSettings = Field(default_factory=LoggingSettings)
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
