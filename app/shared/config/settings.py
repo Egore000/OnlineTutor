@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
-class Tag(str, Enum):
+class Tag(StrEnum):
     SYSTEM = "Система"
     ACCOUNTS = "Аккаунты"
     STUDENTS = "Ученики"
