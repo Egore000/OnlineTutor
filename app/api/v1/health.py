@@ -1,9 +1,13 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/health")
+from app.shared.config import Tag
+
+router = APIRouter(
+    prefix="/health",
+    tags=[Tag.SYSTEM],
+)
 
 
-@router.get("/")
+@router.get("/", summary="Проверка активности сервера")
 async def health() -> dict[str, str]:
-    raise ValueError
     return {"status": "ok"}
