@@ -24,6 +24,7 @@ async def log_requests(request: Request, call_next: Callable[..., Awaitable[Resp
             "status_code": response.status_code,
             "duration_ms": process_time,
             "client_id": request.client,
+            "user-agent": request.headers.get("user-agent"),
         },
     )
     return response
