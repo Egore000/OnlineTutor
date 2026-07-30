@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/v1")
+from app.shared.config import settings
+
+router = APIRouter(prefix=settings.api.v1_prefix)
 
 
 @router.get("/health")

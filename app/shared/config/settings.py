@@ -26,6 +26,21 @@ class AppSettings(BaseSettings):
     )
 
 
+class APISettings(BaseSettings):
+    """Конфигурация API"""
+
+    prefix: str = "/api"
+    v1_prefix: str = "/v1"
+
+    model_config = SettingsConfigDict(
+        env_prefix="API_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
 class DatabaseSettings(BaseSettings):
     """Настройки базы данных"""
 
@@ -98,6 +113,7 @@ class Settings(BaseSettings):
     """Настройки приложения"""
 
     app: AppSettings = Field(default_factory=AppSettings)
+    api: APISettings = Field(default_factory=APISettings)
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
     jwt: JWTSettings = Field(default_factory=JWTSettings)
