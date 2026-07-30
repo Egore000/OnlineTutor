@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from app.api.router import configure_routes
 from app.core.lifespan import lifespan
 from app.core.middleware import configure_middlewares
 from app.shared.config import settings
@@ -14,4 +15,5 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
     configure_middlewares(app)
+    configure_routes(app)
     return app
