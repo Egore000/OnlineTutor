@@ -1,16 +1,16 @@
-from app.modules.accounts.domain.entities.account import Account as AccountDomain
+from app.modules.accounts.domain.entities.account import Account
 from app.modules.accounts.domain.value_objects import Email, FullName
-from app.modules.accounts.infra.models.account_model import Account as AccountModel
+from app.modules.accounts.infra.models.account_model import AccountModel
 
 
 class AccountMapper:
     """Класс для отображения доменной модели в ORM"""
 
     @staticmethod
-    def to_domain(account: AccountModel) -> AccountDomain:
+    def to_domain(account: AccountModel) -> Account:
         """ORM -> Domain"""
 
-        return AccountDomain(
+        return Account(
             id=account.id,
             email=Email(account.email),
             full_name=FullName(account.full_name),
@@ -20,7 +20,7 @@ class AccountMapper:
         )
 
     @staticmethod
-    def to_model(account: AccountDomain) -> AccountModel:
+    def to_model(account: Account) -> AccountModel:
         """Domain -> ORM"""
 
         return AccountModel(
