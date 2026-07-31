@@ -54,6 +54,9 @@ select = [
     "C4",   # comprehensions
     "RET",  # return consistency
     "RUF",  # Ruff-specific rules
+    "RUF001",
+    "RUF002",
+    "RUF003",
     "N",    # naming
 ]
 fixable = ["ALL"]
