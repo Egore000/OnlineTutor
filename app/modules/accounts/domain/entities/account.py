@@ -1,5 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from uuid import UUID
+
+from uuid_extensions import uuid7  # type: ignore[import-untyped]
 
 from app.modules.accounts.domain.value_objects import Email, FullName
 
@@ -8,10 +10,10 @@ from app.modules.accounts.domain.value_objects import Email, FullName
 class Account:
     """Аккаунт пользователя"""
 
-    id: UUID
     email: Email
     full_name: FullName
     is_active: bool
+    id: UUID = field(default_factory=uuid7)
 
     def activate(self) -> None:
         self.is_active = True
