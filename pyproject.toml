@@ -19,6 +19,8 @@ dev = [
     "pre-commit>=4.6.1",
     "pydantic[dotenv]>=2.13.4",
     "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.16.0",
     "uvicorn>=0.51.0",
 ]
@@ -63,6 +65,25 @@ fixable = ["ALL"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
 python_files = ["test_*.py"]
 python_classes = ["Test*.py"]
 python_functions = ["test_*"]
+
+asyncio_mode = "auto"
+
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+]
+
+filterwarnings = [
+    "error",
+]
+
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+    "e2e: end-to-end tests",
+]
