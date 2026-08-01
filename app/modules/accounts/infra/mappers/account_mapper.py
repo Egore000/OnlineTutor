@@ -25,7 +25,7 @@ class AccountMapper:
             id=account.id,
             email=account.email.value,
             full_name=account.full_name.value,
-            is_actie=account.is_active,
+            is_active=account.is_active,
         )
 
     @staticmethod
