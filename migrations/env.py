@@ -21,6 +21,7 @@ config.set_main_option("sqlalchemy.url", settings.db.url)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
+from app.modules.accounts.infra.models import AccountModel  # noqa
 from app.shared.database.base import Base  # noqa: E402
 
 target_metadata = Base.metadata

@@ -43,4 +43,4 @@ class Base(DeclarativeBase, UUIDMixin, CreateUpdateMixin):
     @declared_attr.directive
     @classmethod
     def __tablename__(cls) -> str:
-        return f"{cls.__name__.lower()}s"
+        return cls.__name__.lower().removesuffix("model") + "s"

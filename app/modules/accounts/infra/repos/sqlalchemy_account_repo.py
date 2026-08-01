@@ -3,12 +3,12 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.modules.accounts.domain.entities.account import Account
+from app.modules.accounts.domain.entities import Account
 from app.modules.accounts.domain.exceptions import AccountNotFoundError
-from app.modules.accounts.domain.repos.account_repo import AccountRepository
-from app.modules.accounts.domain.value_objects.email import Email
-from app.modules.accounts.infra.mappers.account_mapper import AccountMapper
-from app.modules.accounts.infra.models.account_model import AccountModel
+from app.modules.accounts.domain.repos import AccountRepository
+from app.modules.accounts.domain.value_objects import Email
+from app.modules.accounts.infra.mappers import AccountMapper
+from app.modules.accounts.infra.models import AccountModel
 
 
 class SQLAlchemyAccountRepository(AccountRepository):

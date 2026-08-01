@@ -1,7 +1,7 @@
 from typing import Protocol
 from uuid import UUID
 
-from app.modules.accounts.domain.entities.account import Account
+from app.modules.accounts.domain.entities import Account
 from app.modules.accounts.domain.value_objects import Email
 
 
