@@ -13,6 +13,7 @@ class Account:
     email: Email
     full_name: FullName
     is_active: bool
+    password_hash: str
     id: UUID = field(default_factory=uuid7)
 
     def activate(self) -> None:

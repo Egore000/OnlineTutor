@@ -13,6 +13,7 @@ class AccountMapper:
         return Account(
             id=account.id,
             email=Email(account.email),
+            password_hash=account.password_hash,
             full_name=FullName(account.full_name),
             is_active=account.is_active,
         )
@@ -25,6 +26,7 @@ class AccountMapper:
             id=account.id,
             email=account.email.value,
             full_name=account.full_name.value,
+            password_hash=account.password_hash,
             is_active=account.is_active,
         )
 

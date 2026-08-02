@@ -14,10 +14,12 @@ class AccountFactory:
         full_name: FullName | None = None,
         is_active: bool | None = None,
         id: UUID | None = None,
+        password_hash: str | None = None,
     ) -> Account:
         return Account(
             id=(id if id is not None else uuid7()),
             email=(email if email is not None else Email("user@example.com")),
             full_name=(full_name if full_name is not None else FullName("Ivan Petrov")),
             is_active=(is_active if is_active is not None else True),
+            password_hash=(password_hash if password_hash is not None else "hashed-password"),
         )

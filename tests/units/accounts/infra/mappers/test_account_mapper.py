@@ -19,6 +19,7 @@ def test_account_mapper_domain_to_model() -> None:
     assert orm_account.email == account.email.value
     assert orm_account.full_name == account.full_name.value
     assert orm_account.is_active == account.is_active
+    assert orm_account.password_hash == account.password_hash
 
 
 @pytest.mark.unit
@@ -44,6 +45,7 @@ def test_account_mapper_model_to_domain(is_active: bool) -> None:
     assert account.full_name.value == orm_account.full_name
 
     assert account.is_active is is_active
+    assert account.password_hash == orm_account.password_hash
 
 
 @pytest.mark.unit
@@ -67,3 +69,23 @@ def test_account_mapper_update_model() -> None:
     assert orm_account.email == account.email.value
     assert orm_account.full_name == account.full_name.value
     assert orm_account.is_active == account.is_active
+
+
+@pytest.mark.unit
+def test_account_mapper_doesnt_change_password() -> None:
+    account_id = uuid7()
+
+    orm_account = AccountModel(
+        id=account_id,
+        email="user@example.com",
+        full_name="Иванов Иван",
+        is_active=True,
+        password_hash="hashed-password",
+    )
+
+    account = AccountFactory.build(id=account_id, password_hash="new-hashed_password")
+
+    AccountMapper.update_model(orm_account, account)
+
+    assert orm_account.id == account.id
+    assert orm_account.password_hash == "hashed-password"

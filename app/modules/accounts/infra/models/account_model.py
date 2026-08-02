@@ -10,3 +10,4 @@ class AccountModel(Base):
     email: Mapped[str] = mapped_column(String(256), unique=True, nullable=False)
     full_name: Mapped[str] = mapped_column(String(80))
     is_active: Mapped[bool] = mapped_column(default=True)
+    password_hash: Mapped[str] = mapped_column(nullable=False)
