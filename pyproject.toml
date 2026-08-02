@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.31.0",
     "fastapi>=0.140.0",
     "pydantic-settings>=2.14.2",
+    "python-json-logger>=4.1.0",
     "sqlalchemy>=2.0.51",
     "uuid7>=0.1.0",
 ]
@@ -60,6 +61,9 @@ select = [
     "C4",   # comprehensions
     "RET",  # return consistency
     "RUF",  # Ruff-specific rules
+    "RUF001",
+    "RUF002",
+    "RUF003",
     "N",    # naming
 ]
 fixable = ["ALL"]
