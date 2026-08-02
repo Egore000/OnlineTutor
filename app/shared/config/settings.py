@@ -1,9 +1,7 @@
 from enum import StrEnum
-from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
@@ -140,20 +138,6 @@ class Settings(BaseSettings):
 
     mode: AppMode = "DEV"
 
-    app: AppSettings = Field(default_factory=AppSettings)
-    api: APISettings = Field(default_factory=APISettings)
-    db: DatabaseSettings = Field(default_factory=DatabaseSettings)
-    test: TestSettings = Field(default_factory=TestSettings)
-    server: ServerSettings = Field(default_factory=ServerSettings)
-    jwt: JWTSettings = Field(default_factory=JWTSettings)
-    log: LoggingSettings = Field(default_factory=LoggingSettings)
-
-    @property
-    def database_url(self) -> str:
-        if self.mode == "TEST":
-            return self.test.database_url
-        return self.db.url
-
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
@@ -161,9 +145,10 @@ class Settings(BaseSettings):
     )
 
 
-@lru_cache
-def get_settings() -> Settings:
-    return Settings()
+settings = Settings()
 
 
-settings = get_settings()
+def get_db_url(settings: Settings) -> str:
+    if settings.mode == "TEST":
+        return TestSettings().database_url
+    return DatabaseSettings().url

@@ -7,7 +7,7 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from app.shared.config import settings
+from app.shared.config import get_db_url, settings
 
 logger = logging.getLogger("alembic.env")
 
@@ -20,7 +20,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", settings.database_url)
+config.set_main_option("sqlalchemy.url", get_db_url(settings))
 
 # add your model's MetaData object here
 # for 'autogenerate' support

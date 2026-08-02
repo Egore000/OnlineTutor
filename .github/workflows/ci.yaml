@@ -35,8 +35,5 @@ jobs:
       - name: Pytest
         env:
           MODE: "TEST"
-          APP_NAME: "Name"
-          APP_SUMMARY: "Summary"
-          APP_DESCRIPTION: "Description"
-          APP_VERSION: "0.1.0"
+          TEST_DATABASE_URL: "postgresql+asyncpg://postgresql:1234@localhost:5432/test_tutor_db"
         run: uv run pytest

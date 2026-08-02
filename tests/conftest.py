@@ -9,16 +9,19 @@ from sqlalchemy.pool import NullPool
 os.environ["MODE"] = "TEST"
 
 from app.modules.accounts.infra.models import AccountModel  # noqa: F401
-from app.shared.config import settings
+from app.shared.config import get_db_url, settings
 from app.shared.database.base import Base
+
+MODE = settings.mode
+DATABASE_URL = get_db_url(settings)
 
 logger = logging.getLogger("tests")
 
-logger.info("[TEST] APP_MODE=%s", settings.mode)
-logger.info("[TEST] DATABASE=%s", settings.database_url)
+logger.info("[TEST] APP_MODE=%s", MODE)
+logger.info("[TEST] DATABASE=%s", DATABASE_URL)
 
 engine = create_async_engine(
-    settings.database_url,
+    DATABASE_URL,
     echo=False,
     poolclass=NullPool,
 )
