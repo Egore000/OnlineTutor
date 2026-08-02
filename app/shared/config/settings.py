@@ -1,3 +1,4 @@
+from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -15,11 +16,29 @@ class AppSettings(BaseSettings):
     """Настройки приложения"""
 
     name: str
+    summary: str
+    description: str
     version: str
     debug: bool = False
+    mode: Literal["TEST", "DEV", "PROD"]
 
     model_config = SettingsConfigDict(
         env_prefix="APP_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
+class APISettings(BaseSettings):
+    """Конфигурация API"""
+
+    prefix: str = "/api"
+    v1_prefix: str = "/v1"
+
+    model_config = SettingsConfigDict(
+        env_prefix="API_",
         env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
@@ -97,16 +116,30 @@ class JWTSettings(BaseSettings):
     )
 
 
+class LoggingSettings(BaseSettings):
+    level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+
+    model_config = SettingsConfigDict(
+        env_prefix="LOG_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
 class Settings(BaseSettings):
     """Настройки приложения"""
 
     mode: AppMode = "DEV"
 
     app: AppSettings = Field(default_factory=AppSettings)
+    api: APISettings = Field(default_factory=APISettings)
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
     test: TestSettings = Field(default_factory=TestSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
     jwt: JWTSettings = Field(default_factory=JWTSettings)
+    log: LoggingSettings = Field(default_factory=LoggingSettings)
 
     @property
     def database_url(self) -> str:
