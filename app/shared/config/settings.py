@@ -1,10 +1,14 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+
+AppMode = Literal["DEV", "TEST", "PROD"]
 
 
 class AppSettings(BaseSettings):
@@ -47,6 +51,20 @@ class DatabaseSettings(BaseSettings):
     )
 
 
+class TestSettings(BaseSettings):
+    """Тестовые настройки"""
+
+    database_url: str
+
+    model_config = SettingsConfigDict(
+        env_prefix="TEST_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
 class ServerSettings(BaseSettings):
     """Настройки сервера"""
 
@@ -82,10 +100,19 @@ class JWTSettings(BaseSettings):
 class Settings(BaseSettings):
     """Настройки приложения"""
 
+    mode: AppMode = "DEV"
+
     app: AppSettings = Field(default_factory=AppSettings)
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
+    test: TestSettings = Field(default_factory=TestSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
     jwt: JWTSettings = Field(default_factory=JWTSettings)
+
+    @property
+    def database_url(self) -> str:
+        if self.mode == "TEST":
+            return self.test.database_url
+        return self.db.url
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",

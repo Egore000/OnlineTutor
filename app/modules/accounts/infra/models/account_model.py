@@ -7,6 +7,6 @@ from app.shared.database.base import Base
 class AccountModel(Base):
     """SQLAlchemy ORM-модель аккаунта пользователя"""
 
-    email: Mapped[str] = mapped_column(String(256), unique=True, primary_key=True)
+    email: Mapped[str] = mapped_column(String(256), unique=True, nullable=False)
     full_name: Mapped[str] = mapped_column(String(80))
     is_active: Mapped[bool] = mapped_column(default=True)

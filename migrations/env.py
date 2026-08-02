@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from logging.config import fileConfig
 
 from alembic import context
@@ -7,6 +8,8 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.shared.config import settings
+
+logger = logging.getLogger("alembic.env")
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -17,7 +20,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", settings.db.url)
+config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
@@ -57,6 +60,11 @@ def run_migrations_offline() -> None:
 
 
 def do_run_migrations(connection: Connection) -> None:
+    logger.info("APP MODE = %s", settings.mode)
+    logger.info(
+        "Running migrations against: %s", connection.engine.url.render_as_string(hide_password=True)
+    )
+
     context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():
