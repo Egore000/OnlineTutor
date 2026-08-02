@@ -28,7 +28,6 @@ class AppSettings(BaseSettings):
     description: str
     version: str
     debug: bool = False
-    mode: Literal["TEST", "DEV", "PROD"]
 
     model_config = SettingsConfigDict(
         env_prefix="APP_",
@@ -85,7 +84,7 @@ class TestSettings(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_prefix="TEST_",
-        env_file=".env",
+        env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",

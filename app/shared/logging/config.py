@@ -14,7 +14,7 @@ def configure_logging() -> logging.Logger:
 
     logger.setLevel(settings.log.level)
 
-    if settings.app.mode == "TEST":
+    if settings.mode == "TEST":
         logger.setLevel(logging.ERROR)
 
     return logger

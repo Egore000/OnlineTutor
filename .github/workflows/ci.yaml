@@ -33,4 +33,10 @@ jobs:
         run: uv run mypy .
 
       - name: Pytest
+        env:
+          MODE: "TEST"
+          APP_NAME: "Name"
+          APP_SUMMARY: "Summary"
+          APP_DESCRIPTION: "Description"
+          APP_VERSION: "0.1.0"
         run: uv run pytest

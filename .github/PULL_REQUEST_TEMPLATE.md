@@ -1,7 +1,5 @@
 ## Epic
 
-<!-- Например: Sprint 1 / Epic 3 -->
-
 Sprint:
 
 Epic:
