@@ -1,12 +1,13 @@
 from enum import StrEnum
-from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
+
+AppMode = Literal["DEV", "TEST", "PROD"]
 
 
 class Tag(StrEnum):
@@ -25,7 +26,6 @@ class AppSettings(BaseSettings):
     description: str
     version: str
     debug: bool = False
-    mode: Literal["TEST", "DEV", "PROD"]
 
     model_config = SettingsConfigDict(
         env_prefix="APP_",
@@ -68,6 +68,20 @@ class DatabaseSettings(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_prefix="DB_",
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
+
+class TestSettings(BaseSettings):
+    """Тестовые настройки"""
+
+    database_url: str
+
+    model_config = SettingsConfigDict(
+        env_prefix="TEST_",
         env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
@@ -122,12 +136,7 @@ class LoggingSettings(BaseSettings):
 class Settings(BaseSettings):
     """Настройки приложения"""
 
-    app: AppSettings = Field(default_factory=AppSettings)
-    api: APISettings = Field(default_factory=APISettings)
-    db: DatabaseSettings = Field(default_factory=DatabaseSettings)
-    server: ServerSettings = Field(default_factory=ServerSettings)
-    jwt: JWTSettings = Field(default_factory=JWTSettings)
-    log: LoggingSettings = Field(default_factory=LoggingSettings)
+    mode: AppMode = "DEV"
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
@@ -136,9 +145,10 @@ class Settings(BaseSettings):
     )
 
 
-@lru_cache
-def get_settings() -> Settings:
-    return Settings()
+settings = Settings()
 
 
-settings = get_settings()
+def get_db_url(settings: Settings) -> str:
+    if settings.mode == "TEST":
+        return TestSettings().database_url
+    return DatabaseSettings().url

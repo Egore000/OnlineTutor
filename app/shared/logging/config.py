@@ -1,7 +1,9 @@
 import logging
 
-from app.shared.config import settings
+from app.shared.config import LoggingSettings, settings
 from app.shared.logging.formatters import formatter
+
+log_settings = LoggingSettings()
 
 
 def configure_logging() -> logging.Logger:
@@ -12,9 +14,9 @@ def configure_logging() -> logging.Logger:
 
     logger.addHandler(handler)
 
-    logger.setLevel(settings.log.level)
+    logger.setLevel(log_settings.level)
 
-    if settings.app.mode == "TEST":
+    if settings.mode == "TEST":
         logger.setLevel(logging.ERROR)
 
     return logger

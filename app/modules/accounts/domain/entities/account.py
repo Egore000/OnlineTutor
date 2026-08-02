@@ -1,8 +1,8 @@
-from dataclasses import dataclass
-from datetime import datetime
+from dataclasses import dataclass, field
 from uuid import UUID
 
-from app.modules.accounts.domain.exceptions import InvalidDatetimeError
+from uuid_extensions import uuid7
+
 from app.modules.accounts.domain.value_objects import Email, FullName
 
 
@@ -10,13 +10,20 @@ from app.modules.accounts.domain.value_objects import Email, FullName
 class Account:
     """Аккаунт пользователя"""
 
-    id: UUID
     email: Email
     full_name: FullName
     is_active: bool
-    created_at: datetime
-    updated_at: datetime
+    password_hash: str
+    id: UUID = field(default_factory=uuid7)
 
-    def __post_init__(self) -> None:
-        if self.created_at > self.updated_at:
-            raise InvalidDatetimeError
+    def activate(self) -> None:
+        self.is_active = True
+
+    def deactivate(self) -> None:
+        self.is_active = False
+
+    def change_email(self, new_email: Email) -> None:
+        self.email = new_email
+
+    def change_full_name(self, new_full_name: FullName) -> None:
+        self.full_name = new_full_name

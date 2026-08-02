@@ -4,13 +4,12 @@ from datetime import datetime
 from sqlalchemy import DateTime, MetaData, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
-from uuid_extensions.uuid7 import uuid7  # type: ignore[import-untyped]
 
 
 class UUIDMixin:
     """Миксин для использования UUID в качестве первичного ключа"""
 
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid7())
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True)
 
 
 class CreateUpdateMixin:
@@ -43,4 +42,4 @@ class Base(DeclarativeBase, UUIDMixin, CreateUpdateMixin):
     @declared_attr.directive
     @classmethod
     def __tablename__(cls) -> str:
-        return cls.__name__.lower()
+        return cls.__name__.lower().removesuffix("model") + "s"

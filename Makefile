@@ -78,3 +78,18 @@ db:
 .PHONY: dblogs
 dblogs:
 	${LOGS} ${DB_CONTAINER} -f
+
+# Локальное юнит-тестирование
+.PHONY: test-unit
+test-unit:
+	pytest -m unit
+
+# Локальное интеграционное тестирование
+.PHONY: test-int:
+test-int:
+	pytest -m integration
+
+# Покрытие тестами
+.PHONY: test-cov
+test-cov:
+	pytest --cov=app --cov-report=term-missing
