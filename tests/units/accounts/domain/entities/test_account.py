@@ -2,7 +2,7 @@ from uuid import UUID
 
 import pytest
 from factories import AccountFactory
-from uuid_extensions import uuid7  # type: ignore[import-untyped]
+from uuid_extensions import uuid7
 
 from app.modules.accounts.domain.value_objects import Email, FullName
 
