@@ -1,3 +1,4 @@
+from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -9,6 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 
 AppMode = Literal["DEV", "TEST", "PROD"]
+
+
+class Tag(StrEnum):
+    SYSTEM = "Система"
+    ACCOUNTS = "Аккаунты"
+    STUDENTS = "Ученики"
+    LESSONS = "Занятия"
+    HOMEWORKS = "Домашние задания"
 
 
 class AppSettings(BaseSettings):
