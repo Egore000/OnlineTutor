@@ -4,7 +4,7 @@ from app.modules.accounts.infra.security.password_hasher import Argon2PasswordHa
 
 
 @pytest.mark.unit
-async def test_hash_not_equal_password() -> None:
+def test_hash_not_equal_password() -> None:
     hasher = Argon2PasswordHasher()
 
     password = "password"
@@ -14,7 +14,7 @@ async def test_hash_not_equal_password() -> None:
 
 
 @pytest.mark.unit
-async def test_verify_password() -> None:
+def test_verify_password() -> None:
     hasher = Argon2PasswordHasher()
 
     password = "password"
@@ -24,7 +24,7 @@ async def test_verify_password() -> None:
 
 
 @pytest.mark.unit
-async def test_incorrect_password() -> None:
+def test_incorrect_password() -> None:
     hasher = Argon2PasswordHasher()
 
     password = "password"
@@ -34,7 +34,7 @@ async def test_incorrect_password() -> None:
 
 
 @pytest.mark.unit
-async def test_hashes_not_equal() -> None:
+def test_hashes_not_equal() -> None:
     hasher = Argon2PasswordHasher()
 
     password1 = "password"
