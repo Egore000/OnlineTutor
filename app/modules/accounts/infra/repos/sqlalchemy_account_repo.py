@@ -65,6 +65,3 @@ class SQLAlchemyAccountRepository(AccountRepository):
             raise AccountNotFoundError(account_id)
 
         await self._session.delete(model)
-
-    async def commit(self) -> None:
-        await self._session.commit()
