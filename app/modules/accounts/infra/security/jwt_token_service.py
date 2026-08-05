@@ -10,16 +10,22 @@ from app.shared.config import JWTSettings
 jwt_settings = JWTSettings()
 
 
-class JWTTokenServcie(TokenService):
+class JWTTokenService(TokenService):
     """Реализация сервиса работы с токенами на базе JWT"""
 
-    def __init__(self, secret_key: str, algorithm: str) -> None:
+    def __init__(
+        self,
+        secret_key: str,
+        algorithm: str,
+        expire_minutes: int = jwt_settings.access_token_expire_minutes,
+    ) -> None:
         self._secret_key = secret_key
         self._algorithm = algorithm
+        self._expire_minutes = expire_minutes
 
     def create_access_token(self, account_id: UUID) -> str:
         now = datetime.now(UTC)
-        exp = now + timedelta(minutes=jwt_settings.access_token_expire_minutes)
+        exp = now + timedelta(minutes=self._expire_minutes)
 
         payload = {
             "sub": str(account_id),
