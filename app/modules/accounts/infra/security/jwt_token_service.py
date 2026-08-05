@@ -29,10 +29,7 @@ class JWTTokenService(TokenService):
             "exp": exp,
             "iat": now,
         }
-        try:
-            return jwt.encode(payload, self._secret_key, self._algorithm)
-        except jwt.exceptions.PyJWTError as exc:
-            raise InvalidTokenError from exc
+        return jwt.encode(payload, self._secret_key, self._algorithm)
 
     def decode_access_token(self, token: str) -> UUID:
         try:
