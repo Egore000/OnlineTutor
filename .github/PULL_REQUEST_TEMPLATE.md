@@ -4,6 +4,8 @@ Sprint:
 
 Epic:
 
+Closes
+
 ---
 
 ## Что сделано

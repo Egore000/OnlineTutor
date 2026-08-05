@@ -85,7 +85,7 @@ test-unit:
 	pytest -m unit
 
 # Локальное интеграционное тестирование
-.PHONY: test-int:
+.PHONY: test-int
 test-int:
 	pytest -m integration
 
