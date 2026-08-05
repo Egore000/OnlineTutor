@@ -5,9 +5,6 @@ import jwt
 
 from app.modules.accounts.application.services.token_service import TokenService
 from app.modules.accounts.domain.exceptions import InvalidTokenError
-from app.shared.config import JWTSettings
-
-jwt_settings = JWTSettings()
 
 
 class JWTTokenService(TokenService):
@@ -17,7 +14,7 @@ class JWTTokenService(TokenService):
         self,
         secret_key: str,
         algorithm: str,
-        expire_minutes: int = jwt_settings.access_token_expire_minutes,
+        expire_minutes: int = 30,
     ) -> None:
         self._secret_key = secret_key
         self._algorithm = algorithm
